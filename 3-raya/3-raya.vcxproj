@@ -140,6 +140,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="3-raya.cpp" />
+    <ClCompile Include="PlayLogic.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="PlayLogic.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
