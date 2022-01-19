@@ -1,6 +1,8 @@
 #include "PlayLogic.h"
 #include "iostream"
 #include "TableMgr.h"
+#include <vector>
+#include "Position.h"
 
 GameResult PlayGame(int turno)
 {
@@ -69,38 +71,19 @@ void PlayHuman(char(&tablero)[3][3], int* fila, int* columna) {
     *columna = nColumna;
 }
 
+#define MINI_MAX true
+
 void PlayMachine(char(&tablero)[3][3], int* fila, int* columna) {
 
     std::cout << "\nJugada CPU: \n";
 
-    // If the central place is empty, I always play there
-    if (IS_EMPTY(tablero[1][1])) {
-        *fila = 1;
-        *columna = 1;
-        return;
-    }
+    if (MINI_MAX)
+        // Game best movement algorithm
+        MinimaxAlgorithm(tablero, fila, columna);
 
-    // I try to win
-    if ( TryWinnerMove(tablero, fila, columna) )
-        return;
-    
-    // I try that the other player does not win
-    if (TryBlockOpponent(tablero, fila, columna))
-        return;
-
-    // I cannot win, I cannot block the opponent
-    // If the middle place is mine, I play the middle positions
-    if (tablero[1][1] == static_cast<char>(Sign::CPU)) {
-        if (Pmedio(tablero, fila, columna) ||
-            Pesquina(tablero, fila, columna) )
-            return;
-    }
-    // Otherwise I play the corners
-    else {
-        if (Pesquina(tablero, fila, columna) ||
-            Pmedio(tablero, fila, columna))
-            return;
-    }
+    else
+        // Study of the current state and makes decision
+        AlgorithmicMachinePlay(tablero, fila, columna);
 }
 
 bool IsWinnerCorner(char(&tablero)[3][3], int fila, int columna)
@@ -346,4 +329,116 @@ bool TryBlockOpponent(char(&tablero)[3][3], int* fila, int* columna)
     }
 
     return false;
+}
+
+void AlgorithmicMachinePlay(char(&tablero)[3][3], int* fila, int* columna)
+{
+    // If the central place is empty, I always play there
+    if (IS_EMPTY(tablero[1][1])) {
+        *fila = 1;
+        *columna = 1;
+        return;
+    }
+
+    // I try to win
+    if (TryWinnerMove(tablero, fila, columna))
+        return;
+
+    // I try that the other player does not win
+    if (TryBlockOpponent(tablero, fila, columna))
+        return;
+
+    // I cannot win, I cannot block the opponent
+    // If the middle place is mine, I play the middle positions
+    if (tablero[1][1] == static_cast<char>(Sign::CPU)) {
+        if (Pmedio(tablero, fila, columna) ||
+            Pesquina(tablero, fila, columna))
+            return;
+    }
+    // Otherwise I play the corners
+    else {
+        if (Pesquina(tablero, fila, columna) ||
+            Pmedio(tablero, fila, columna))
+            return;
+    }
+}
+
+void MinimaxAlgorithm(char(&tablero)[3][3], int* fila, int* columna)
+{
+    Position BestMove;
+
+    // Make the calculus of the position
+    MiniMax(tablero, true, &BestMove);
+
+    // Save the computed position
+    *fila = BestMove.Row;
+    *columna = BestMove.Column;
+}
+
+int MiniMax(char tablero[3][3], bool bMax, Position *BestMove /*= nullptr*/)
+{
+    // Obtain all the possible moves
+    std::vector<Position> posibles;
+    GetEmptyPositions(tablero, &posibles);
+
+    // If there are no possible moves, return the value of the current table
+    if (posibles.size() == 0) {
+        return static_cast<int>(GetTableValue(tablero));
+    }
+
+    // It's my turn, I'll do my best
+    if (bMax) {
+
+        int nMax{ -10000 };
+        Position BestPosition;
+
+        // Scroll all the possible moves
+        for (auto i : posibles) {
+
+            // Create an object with the proposed place
+            char NewTablero[3][3];
+            CopyTable(NewTablero, tablero);
+            PlayPosition(NewTablero, i.Row, i.Column, 1);
+
+            int nCandidateMax = MiniMax(NewTablero, !bMax);
+            if (nCandidateMax > nMax) {
+                BestPosition = i;
+                nMax = nCandidateMax;
+            }
+        }
+
+        // Save the best move that I found
+        if (BestMove)
+            *BestMove = BestPosition;
+
+        return nMax;
+    }
+    // It's my opponent turn, he'll do his best
+    else {
+
+        int nMin{ 10000 };
+        Position BestPosition;
+
+        // Scroll all the possible moves
+        for (auto i : posibles) {
+
+            // Create an object with the proposed place
+            char NewTablero[3][3];
+            CopyTable(NewTablero, tablero);
+            PlayPosition(NewTablero, i.Row, i.Column, 0);
+
+            int nCandidateMin = MiniMax(NewTablero, !bMax);
+            if (nCandidateMin < nMin) {
+                BestPosition = i;
+                nMin = nCandidateMin;
+            }
+        }
+
+        // Save the best move that I found
+        if (BestMove)
+            *BestMove = BestPosition;
+
+        return nMin;
+    }
+
 }

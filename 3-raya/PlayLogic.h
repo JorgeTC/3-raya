@@ -1,10 +1,11 @@
 #pragma once
+#include "Position.h"
 
 // Class to keep the result of a finished game
 enum class GameResult {
-	USER_WIN,
-	EVEN,
-	CPU_WIN
+	USER_WIN = -1,
+	EVEN = 0,
+	CPU_WIN = 1
 };
 
 // Sign for every player
@@ -31,4 +32,6 @@ bool Pmedio(char(&tablero)[3][3], int* fila, int* columna);
 bool Pesquina(char(&tablero)[3][3], int* fila, int* columna);
 bool TryWinnerMove(char(&tablero)[3][3], int* fila, int* columna);
 bool TryBlockOpponent(char(&tablero)[3][3], int* fila, int* columna);
-
+void AlgorithmicMachinePlay(char(&tablero)[3][3], int* fila, int* columna);
+void MinimaxAlgorithm(char(&tablero)[3][3], int* fila, int* columna);
+int MiniMax(char tablero[3][3], bool bMax, Position* BestMove = nullptr);
