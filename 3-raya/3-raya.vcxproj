@@ -142,11 +142,13 @@
     <ClCompile Include="3-raya.cpp" />
     <ClCompile Include="GUI.cpp" />
     <ClCompile Include="PlayLogic.cpp" />
+    <ClCompile Include="Position.cpp" />
     <ClCompile Include="TableMgr.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GUI.h" />
     <ClInclude Include="PlayLogic.h" />
+    <ClInclude Include="Position.h" />
     <ClInclude Include="TableMgr.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
