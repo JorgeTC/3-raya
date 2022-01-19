@@ -3,6 +3,13 @@
 #include "TableMgr.h"
 #include <vector>
 #include "Position.h"
+#include <algorithm>
+#include <random>
+
+// Macro to make the game more fun
+std::random_device dev;
+std::mt19937 rng(dev());
+#define SUFFLE(_vt) std::shuffle(std::begin(_vt), std::end(_vt), rng);
 
 GameResult PlayGame(int turno)
 {
@@ -385,6 +392,9 @@ int MiniMax(char tablero[3][3], bool bMax, Position *BestMove /*= nullptr*/)
     if (posibles.size() == 0) {
         return static_cast<int>(GetTableValue(tablero));
     }
+
+    // Otherwise I shuffle them to have a more random playing
+    SUFFLE(posibles);
 
     // It's my turn, I'll do my best
     if (bMax) {
