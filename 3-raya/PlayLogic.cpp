@@ -389,7 +389,7 @@ int MiniMax(char tablero[3][3], bool bMax, Position *BestMove /*= nullptr*/)
     GetEmptyPositions(tablero, &posibles);
 
     // If there are no possible moves, return the value of the current table
-    if (posibles.size() == 0) {
+    if (posibles.size() == 0 || IsWon(tablero) ) {
         return static_cast<int>(GetTableValue(tablero));
     }
 
@@ -415,6 +415,10 @@ int MiniMax(char tablero[3][3], bool bMax, Position *BestMove /*= nullptr*/)
                 BestPosition = i;
                 nMax = nCandidateMax;
             }
+
+            // Check if I have found the best option
+            if (nMax == static_cast<int>(GameResult::CPU_WIN))
+                break;
         }
 
         // Save the best move that I found
@@ -442,6 +446,10 @@ int MiniMax(char tablero[3][3], bool bMax, Position *BestMove /*= nullptr*/)
                 BestPosition = i;
                 nMin = nCandidateMin;
             }
+
+            // Check if I have found the best option
+            if (nMin == static_cast<int>(GameResult::USER_WIN))
+                break;
         }
 
         // Save the best move that I found

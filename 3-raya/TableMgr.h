@@ -10,7 +10,7 @@
 
 void clear(char(&tablero)[3][3]);
 void print(char(&tablero)[3][3]);
-bool IsWon(char(&tablero)[3][3]);
+bool IsWon(char tablero[3][3]);
 GameResult GetTableValue(char tablero[3][3]);
 bool IsFull(char(&tablero)[3][3]);
 bool PlayPosition(char(&tablero)[3][3], int nFila, int nColumna, int nTurn);
