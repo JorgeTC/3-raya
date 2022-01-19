@@ -8,7 +8,8 @@
 
 // Macro to make the game more fun
 std::random_device dev;
-std::mt19937 rng(dev());
+auto seed = 384207863 /*dev()*/;
+std::mt19937 rng(seed);
 #define SUFFLE(_vt) std::shuffle(std::begin(_vt), std::end(_vt), rng);
 
 GameResult PlayGame(int turno)
