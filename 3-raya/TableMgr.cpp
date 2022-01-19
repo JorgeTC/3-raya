@@ -32,7 +32,7 @@ void print(char(&tablero)[3][3]) {
     }
 }
 
-bool IsWon(char(&tablero)[3][3])
+bool IsWon(char tablero[3][3])
 {
     // I check the diagonals
     // Diagonal from left top to right bottom
