@@ -415,6 +415,10 @@ int MiniMax(char tablero[3][3], bool bMax, Position *BestMove /*= nullptr*/)
                 BestPosition = i;
                 nMax = nCandidateMax;
             }
+
+            // Check if I have found the best option
+            if (nMax == 1)
+                break;
         }
 
         // Save the best move that I found
@@ -442,6 +446,10 @@ int MiniMax(char tablero[3][3], bool bMax, Position *BestMove /*= nullptr*/)
                 BestPosition = i;
                 nMin = nCandidateMin;
             }
+
+            // Check if I have found the best option
+            if (nMin == -1)
+                break;
         }
 
         // Save the best move that I found
