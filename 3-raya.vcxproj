@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -21,7 +21,7 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{a6205b46-40d3-4392-885b-00d5ddb29ddd}</ProjectGuid>
+    <ProjectGuid>{ab42b644-2be6-42ce-9e6c-69dcbceba9e0}</ProjectGuid>
     <RootNamespace>My3raya</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
@@ -139,17 +139,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="3-raya.cpp" />
-    <ClCompile Include="GUI.cpp" />
-    <ClCompile Include="PlayLogic.cpp" />
-    <ClCompile Include="Position.cpp" />
-    <ClCompile Include="TableMgr.cpp" />
+    <ClInclude Include="src\GUI.h" />
+    <ClInclude Include="src\PlayLogic.h" />
+    <ClInclude Include="src\Position.h" />
+    <ClInclude Include="src\TableMgr.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="GUI.h" />
-    <ClInclude Include="PlayLogic.h" />
-    <ClInclude Include="Position.h" />
-    <ClInclude Include="TableMgr.h" />
+    <ClCompile Include="src\3-raya.cpp" />
+    <ClCompile Include="src\GUI.cpp" />
+    <ClCompile Include="src\PlayLogic.cpp" />
+    <ClCompile Include="src\Position.cpp" />
+    <ClCompile Include="src\TableMgr.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
